@@ -46,7 +46,7 @@ NL  = \n | \r | \r\n
 {LN} {return Parser.LN; }
 
 /* float */
-{NUM}  { yyparser.yylval = new ParserVal(Double.parseDouble(yytext()));
+{NUM}  { yyparser.yylval = new ParserVal(yytext());
          return Parser.NUM; }
 
 /* whitespace */
