@@ -16,7 +16,7 @@
 %}
       
 %token NL           /* newline  */
-%token <dval> NUM   /* a number */
+%token <sval> NUM   /* a number */
 %token LOG10        /* Log 10 token*/
 %token LN        /* Log e token*/
 
@@ -27,7 +27,7 @@
 %left NEG          /* negation--unary minus */
 %right '^'         /* exponentiation        */
 %left LOG10 
-%left LN      
+%leftLN      
 %%
 
 input:   /* empty string */
@@ -40,15 +40,15 @@ line:    NL      { if (interactive) System.out.print("Expression: "); }
        ;
       
 exp:     NUM                { $$ = $1; }
-       | exp '+' exp        { $$ = $1 + $3; }
-       | exp '-' exp        { $$ = $1 - $3; }
-       | exp '*' exp        { $$ = $1 * $3; }
-       | exp '/' exp        { $$ = $1 / $3; }
-       | exp '%' exp        { $$ = $1 % $3; }
-       | '-' exp  %prec NEG { $$ = -$2; }
-       | LOG10 exp          { $$ = Math.log10($2); }
-       | LN exp             { $$ = Math.ln($2); }
-       | exp '^' exp        { $$ = Math.pow($1, $3); }
+       | exp exp '+'        { $$ = $1 + " " + $2 + "+"; }
+       | exp '-' exp        { $$ = $1 + " " + $3 + "-"; }
+       | exp '*' exp        { $$ = $1 + " " + $2 + "*"; }
+       | exp '/' exp        { $$ = $1 + " " + $2 + "/"; }
+       | exp '%' exp        { $$ = $1 + " " + $2 + "%"; }
+       | '-' exp  %prec NEG { $$ = $2 + "-"; }
+       | LOG10 exp          { $$ = $2 + "Log10"; }
+       | LN exp             { $$ = $2 + "LN"; }
+       | exp '^' exp        { $$ = $1 + " " + $3 + "^"; }
        | '(' exp ')'        { $$ = $2; }
        ;
 
