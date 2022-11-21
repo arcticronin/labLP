@@ -20,7 +20,8 @@
     this.yyparser = yyparser;
   }
 %}
-
+LOG10 = ("log10" | "LOG10" | "Log10")
+LN = ("log", "ln")
 NUM = [0-9]+ ("." [0-9]+)?
 NL  = \n | \r | \r\n
 
@@ -32,11 +33,17 @@ NL  = \n | \r | \r\n
 "*" | 
 "/" | 
 "^" | 
+"%" |
 "(" | 
 ")"    { return (int) yycharat(0); }
 
 /* newline */
 {NL}   { return Parser.NL; }
+
+/* LOG 10 */
+{LOG10} { return Parser.LOG10; }
+
+{LN} {return Parser.LN; }
 
 /* float */
 {NUM}  { yyparser.yylval = new ParserVal(Double.parseDouble(yytext()));

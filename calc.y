@@ -15,16 +15,19 @@
   import java.io.*;
 %}
       
-%token NL          /* newline  */
-%token <dval> NUM  /* a number */
+%token NL           /* newline  */
+%token <dval> NUM   /* a number */
+%token LOG10        /* Log 10 token*/
+%token LN        /* Log e token*/
 
 %type <dval> exp
 
 %left '-' '+'
-%left '*' '/'
+%left '*' '/' '%'
 %left NEG          /* negation--unary minus */
 %right '^'         /* exponentiation        */
-      
+%left LOG10 
+%left LN      
 %%
 
 input:   /* empty string */
@@ -41,7 +44,10 @@ exp:     NUM                { $$ = $1; }
        | exp '-' exp        { $$ = $1 - $3; }
        | exp '*' exp        { $$ = $1 * $3; }
        | exp '/' exp        { $$ = $1 / $3; }
+       | exp '%' exp        { $$ = $1 % $3; }
        | '-' exp  %prec NEG { $$ = -$2; }
+       | LOG10 exp          { $$ = Math.log10($2); }
+       | LN exp             { $$ = Math.ln($2); }
        | exp '^' exp        { $$ = Math.pow($1, $3); }
        | '(' exp ')'        { $$ = $2; }
        ;
