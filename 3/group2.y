@@ -2,25 +2,18 @@
   import java.io.*;
 %}
 
-%token OPEN_PAREN;
-%token CLOSE_PAREN;
-%token <sval> SKIP;
-
-%start s
-
 %%
 
-parens  : OPEN_PAREN s CLOSE_PAREN
-        | OPEN_PAREN CLOSE_PAREN
+input: /* null */ { $$ = new ParserVal("");
+                    System.out.println(": \""+$$.sval+"\""); }
+     | input negS { $$ = new ParserVal($1.sval+$2.sval);
+                   System.out.println(": "+$$.sval); }
+     | input '+' { $$ = new ParserVal($1.sval+$2.sval);
+                   System.out.println(": "+$$.sval); }
 
-exp     : parens
-
-exps    : exp SKIP { System.out.println("S: "+$2); }
-        | exp
-
-s       : SKIP { System.out.println("txt: "+$1); }
-        | exps
-        | s exps
+negS: '-' { $$ = $1; }
+    | negS '-' { $$ = new ParserVal($1.sval + '-'); }
+    ;
 
 %%
 
