@@ -4,18 +4,11 @@
 
 %token OPEN_PAREN;
 %token CLOSE_PAREN;
-%token OPEN_BRACK;
-%token CLOSE_BRACK;
-
 %token <sval> SKIP;
 
 %start s
 
 %%
-parens  : OPEN_BRACKS s CLOSE_BRACKS
-        | OPEN_BRACKS CLOSE_BRACKS
-
-exp     : braks
 
 parens  : OPEN_PAREN s CLOSE_PAREN
         | OPEN_PAREN CLOSE_PAREN
