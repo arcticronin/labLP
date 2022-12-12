@@ -8,13 +8,20 @@ input: /* null */ { $$ = new ParserVal("");
                     System.out.println(": \""+$$.sval+"\""); }
      | input negS { $$ = new ParserVal($1.sval+$2.sval);
                    System.out.println(": "+$$.sval); }
-     | input '+' { $$ = new ParserVal($1.sval+$2.sval);
+     | input timesS { $$ = new ParserVal($1.sval+$2.sval);
+                   System.out.println(": "+$$.sval); }
+     | input plusS { $$ = new ParserVal($1.sval+$2.sval);
                    System.out.println(": "+$$.sval); }
 
 negS: '-' { $$ = $1; }
     | negS '-' { $$ = new ParserVal($1.sval + '-'); }
     ;
-
+timesS: '*' {$$ = $1; }
+    | timesS '*' { $$ = new ParserVal($1.sval + '*'); }
+    ;
+plusS: '+' {$$ = $1; }
+    | plusS '+' { $$ = new ParserVal($1.sval + '+'); }
+    ;
 %%
 
 void yyerror(String s)

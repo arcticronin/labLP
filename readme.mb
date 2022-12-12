@@ -1,0 +1,3 @@
+jflex *.lex file, lexer
+yacc -J *.y (cause it's naive C)
+javac

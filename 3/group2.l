@@ -17,7 +17,8 @@
 %%
 
 "+" |
-"-" { yyparser.yylval = new ParserVal(""+yycharat(0));
+"-" |
+"*" { yyparser.yylval = new ParserVal(""+yycharat(0));
       return (int) yycharat(0); }
 
 [^] {} /*butta il resto*/
